@@ -24,3 +24,7 @@ jobs:
     - name: Run script
       run: |
         python main.py
+    - name: git setting
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
