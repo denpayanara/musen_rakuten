@@ -19,8 +19,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         
-    - name: Install font
-      run: sudo apt install fonts-ipafont
+    # - name: Install font
+     # run: sudo apt install fonts-ipafont
     - name: Run script
       run: |
         python main.py
