@@ -34,5 +34,6 @@ jobs:
         if ! git diff --exit-code --quiet
         then
           git add .
+          git commit -m "Add csv" -a
           git push
         fi
