@@ -31,3 +31,8 @@ jobs:
     - name: Commit files
       run: |
         git add -N .
+        if ! git diff --exit-code --quiet
+        then
+          git add .
+          git push
+        fi
