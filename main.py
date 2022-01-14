@@ -274,3 +274,26 @@ data_Rep_4 = df_edit(data_Rep_3)
 data_Rep_df = city_merge(data_Rep_4)
 
 output(data_Rep_df, 'Rakuten_Repeater')
+
+# フェムトセル
+
+# データラングリング
+femto = (
+    data_4G_1["musen"][1]["detailInfo"]["note"]
+    .split("\\n", 2)[2]
+    .replace("\\n", " ")
+    .strip()
+)
+
+# フェッチ
+se_femto = fetch_cities(femto)
+
+# データフレーム編集
+data_femto_1 = df_edit(se_femto)
+
+# 市区町村リストとマージ
+data_femto_df = city_merge(data_femto_1)
+
+# 保存
+data_femto_df.to_csv(f'csv/femto.csv', index=False, encoding="utf_8_sig")
+
