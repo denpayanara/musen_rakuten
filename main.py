@@ -136,11 +136,12 @@ def output(df, musen):
 
     # 差分計算
     # 前日の値を取得
-    yest_data = pd.read_csv(f'csv/{musen}.csv')
+    yest_data = pd.read_csv(f'tweet_data/{musen}.csv')
 
     df_kinki.insert(loc = 2, column = '増減数', value = df['開設局数'] - yest_data['開設局数'])
     df_kinki.insert(loc = 4, column = '前回', value = yest_data['開設局数'])
 
+    # 奈良県用の差分DataFrame作成
     # 奈良県を抽出し都道府県名列を削除
     df_nara = df_kinki[df_kinki["都道府県名"] == '奈良県']
     df_nara.drop(columns='都道府県名', inplace=True)
@@ -151,23 +152,24 @@ def output(df, musen):
     # df_naraの差分ある時のみ保存
     if len(df_nara[df_nara["増減数"] != 0]) > 0:
 
-        df_nara.to_csv(f'nara/{musen}_nara.csv', index=False, encoding="utf_8_sig")
+        df_nara.to_csv(f'nara/diff_{musen}_nara.csv', index=False, encoding="utf_8_sig")
 
-        # 奈良県用の最終更新日を書き込んだHTMLファイル作成
-        f = open('nara/{musen}_LastUpdate_Nara.xml', 'w', encoding='UTF-8')
+        # 奈良県用の最終更新日を書き込んだXMLファイルを作成
+        f = open(f'nara/{musen}_LastUpdate_Nara.xml', 'w', encoding='UTF-8')
         f.write(f'<?xml version="1.0" encoding="UTF-8" ?><{musen}_Nara><date>{now.strftime("%Y/%m/%d %H:%M")}</date></{musen}_Nara>')
         f.close()
     
+    # 近畿圏用の差分DataFrame作成
     # 近畿圏の都道府県名列を削除
     df_kinki.drop(columns='都道府県名', inplace=True)
 
-    # 近畿圏を保存
-    df_kinki.to_csv(f'csv/{musen}.csv', index=False, encoding="utf_8_sig")
+    # 保存(Tweet botのツイートチェック用データ)
+    df_kinki.to_csv(f'tweet_data/{musen}.csv', index=False, encoding="utf_8_sig")
 
     # 増減数が0で無いものを抽出
     df_kinki_diff = df_kinki.query('増減数 != 0 ')
 
-    # 差分がある時、画像を作成し保存
+    # 差分がある時、ツイート用の画像を作成し保存
     if len(df_kinki_diff) > 0:
         
         # plotlyで近畿圏のデータをプロット
@@ -219,7 +221,7 @@ Rakuten_4G_df = city_merge(data_4G_4)
 
 output(Rakuten_4G_df, 'Rakuten_4G')
 
-# 【月別差分】
+# 【月別差分(4G)】
 
 # csv読み込み_月別
 df_before_month = pd.read_csv('csv/musen_month.csv')
@@ -231,7 +233,7 @@ if df_before_month.columns[3] == str_month:
 else:
     df_before_month.insert(loc = 3, column = str_month, value = Rakuten_4G_df['開設局数'] - df_before_month['開設局数'])
     
-# 【日別差分】
+# 【日別差分(4G)】
 
 # csv読み込み_日別
 df_before_day = pd.read_csv('csv/musen_day.csv')
