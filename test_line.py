@@ -53,6 +53,13 @@ def tweet(key, url):
 
         files = {'imageFile': img_data}
 
+        requests.post(
+            'https://notify-api.line.me/api/notify',
+            headers = token_dic,
+            data = send_dic,
+            files=files
+            )
+
 for key, url in musen.items():
 
     tweet(key, url)
