@@ -97,13 +97,11 @@ def city_merge(df0):
     df_code = pd.read_csv(
         "city_list.csv",
         dtype={"団体コード": int, "都道府県名": str, "郡名": str, "市区町村名": str},
-        )
+        ).set_index('団体コード')
 
     df_code["市区町村名"] = df_code["郡名"].fillna("") + df_code["市区町村名"].fillna("")
 
     df_code.drop("郡名", axis=1, inplace=True)
-
-    df_code = df_code.set_index('団体コード')
 
     # 空の都道府県名に追記
     df_code.loc[250007, '市区町村名'] = '滋賀県'
