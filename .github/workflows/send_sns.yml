@@ -1,7 +1,8 @@
-name: Line Bot
+name: Send Message Twitter & LINE
 
 on:
-  workflow_dispatch:
+  schedule:
+    - cron:  '0 21 * * *'
 
 jobs:
   build:
@@ -17,9 +18,13 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements_line.txt
+        pip install -r requirements_send_sns.txt
     - name: Run script
       run: |
-        python test_line.py
+        python send_sns.py
       env:
+        API_KEY: ${{ secrets.API_KEY }}
+        API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
         LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
