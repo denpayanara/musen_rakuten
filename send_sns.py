@@ -24,17 +24,22 @@ def send_message(key, url):
     # 差分ありのみ抽出
     df_diff = df[df["増減数"] != 0]
 
+    # Twitter
+    api_key = os.environ["API_KEY"]
+    api_secret = os.environ["API_SECRET_KEY"]
+    access_token = os.environ["ACCESS_TOKEN"]
+    access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
+    auth = tweepy.OAuthHandler(api_key, api_secret)
+    auth.set_access_token(access_token, access_token_secret)
+    api = tweepy.API(auth)
+
+    # LINE
+    Line_Token = os.environ['LINE_TOKEN']
+    token_dic = {'Authorization': 'Bearer' + ' ' + Line_Token}
+
+
     # 差分ありの時
     if len(df_diff) > 0:
-
-        # Twitter
-        api_key = os.environ["API_KEY"]
-        api_secret = os.environ["API_SECRET_KEY"]
-        access_token = os.environ["ACCESS_TOKEN"]
-        access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
-
-        # LINE
-        Line_Token = os.environ['LINE_TOKEN']
 
         # 都道府県の合計行を抽出
         df_pref = df_diff.query('市区町村名 == "滋賀県" or 市区町村名 == "京都府" or 市区町村名 == "大阪府" or 市区町村名 == "兵庫県" or 市区町村名 == "奈良県" or 市区町村名 == "奈良県" or 市区町村名 == "和歌山県"')
@@ -57,10 +62,6 @@ def send_message(key, url):
         img_data = BytesIO(img)
 
         # ツイート送信
-
-        auth = tweepy.OAuthHandler(api_key, api_secret)
-        auth.set_access_token(access_token, access_token_secret)
-        api = tweepy.API(auth)
         media_ids = []
         res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
         media_ids.append(res_media_ids.media_id)
@@ -69,8 +70,6 @@ def send_message(key, url):
         time.sleep(1)
 
         # LINE送信
-
-        token_dic = {'Authorization': 'Bearer' + ' ' + Line_Token}
         send_dic = {'message': message} 
         files = {'imageFile': img_data}
         requests.post(
@@ -78,6 +77,25 @@ def send_message(key, url):
             headers = token_dic,
             data = send_dic,
             files=files
+            )
+
+    # '4G(包括免許)'の更新が無い場合
+    elif key == '4G(包括免許)':
+        
+        message = f"本日の{key}の更新はありません。\n\n#楽天モバイル #近畿 #bot"
+        print(message)
+
+        # ツイート送信
+        api.update_status(status = message)
+
+        time.sleep(1)
+
+        # LINE送信
+        send_dic = {'message': message} 
+        requests.post(
+            'https://notify-api.line.me/api/notify',
+            headers = token_dic,
+            data = send_dic,
             )
 
 for key, url in musen.items():
