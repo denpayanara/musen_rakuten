@@ -2,6 +2,8 @@ import os
 from io import BytesIO
 import time
 
+from linebot import LineBotApi
+from linebot.models import TextSendMessage, ImageSendMessage
 import pandas as pd
 import tweepy
 import requests
@@ -34,8 +36,7 @@ def send_message(key, url):
     api = tweepy.API(auth)
 
     # LINE
-    Line_Token = os.environ['LINE_TOKEN']
-    token_dic = {'Authorization': 'Bearer' + ' ' + Line_Token}
+    line_bot_api = LineBotApi(os.environ['LINE_CHANNEL_ACCESS_TOKEN'])
 
 
     # 差分ありの時
@@ -70,14 +71,15 @@ def send_message(key, url):
         time.sleep(1)
 
         # LINE送信
-        send_dic = {'message': message} 
-        files = {'imageFile': img}
-        requests.post(
-            'https://notify-api.line.me/api/notify',
-            headers = token_dic,
-            data = send_dic,
-            files=files
-            )
+        line_bot_api.broadcast(
+            messages = [
+                TextSendMessage(text = message),
+                ImageSendMessage(
+                    original_content_url = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_4G.png',
+                    preview_image_url = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_4G.png'
+                )
+            ]
+        )
 
     # '4G(包括免許)'の更新が無い場合
     elif key == '4G(包括免許)':
@@ -91,12 +93,7 @@ def send_message(key, url):
         time.sleep(1)
 
         # LINE送信
-        send_dic = {'message': message} 
-        requests.post(
-            'https://notify-api.line.me/api/notify',
-            headers = token_dic,
-            data = send_dic,
-            )
+        line_bot_api.broadcast(messages = TextSendMessage(text = message))
 
 for key, url in musen.items():
 
