@@ -28,4 +28,4 @@ jobs:
         API_SECRET_KEY: ${{ secrets.API_SECRET_KEY }}
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
-        LINE_TOKEN: ${{ secrets.LINE_TOKEN }}
+        LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
