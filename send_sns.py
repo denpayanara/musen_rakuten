@@ -66,7 +66,7 @@ def send_message(key, url):
         media_ids = []
         res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
         media_ids.append(res_media_ids.media_id)
-        api.update_status(status = message, media_ids = media_ids)
+        #api.update_status(status = message, media_ids = media_ids)
         
         time.sleep(1)
 
