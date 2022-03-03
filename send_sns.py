@@ -36,7 +36,7 @@ def send_message(key, url):
     api = tweepy.API(auth)
 
     # LINE
-    line_bot_api = LineBotApi(os.environ['LINE_CHANNEL_ACCESS_TOKEN'])
+    line_bot_api = LineBotApi(os.environ["LINE_CHANNEL_ACCESS_TOKEN"])
 
 
     # 差分ありの時
