@@ -71,7 +71,7 @@ def send_message(key, url):
 
         # LINE送信
         send_dic = {'message': message} 
-        files = {'imageFile': img_data}
+        files = {'imageFile': open('tweet_data/diff_Rakuten_4G.png', 'rb')}
         requests.post(
             'https://notify-api.line.me/api/notify',
             headers = token_dic,
