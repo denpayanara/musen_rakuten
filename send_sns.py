@@ -75,8 +75,8 @@ def send_message(key, url):
             messages = [
                 TextSendMessage(text = message),
                 ImageSendMessage(
-                    original_content_url = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_4G.png',
-                    preview_image_url = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_4G.png'
+                    original_content_url = url[1],
+                    preview_image_url = url[1]
                 )
             ]
         )
