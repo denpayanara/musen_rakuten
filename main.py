@@ -1,10 +1,10 @@
-import re
-import urllib.parse
 import datetime
+import json
+import re
+from urllib import request, parse
 
 import pandas as pd
 import plotly.figure_factory as ff
-import requests
 
 Rakuten_4G = {
     # 1:免許情報検索  2: 登録情報検索
@@ -46,10 +46,12 @@ Rakuten_Repeater = {
 
 def musen_api(d):
 
-    parm = urllib.parse.urlencode(d, encoding="shift-jis")
-    r = requests.get("https://www.tele.soumu.go.jp/musen/list", parm)
+    params = parse.urlencode(Rakuten_4G, encoding="shift-jis")
 
-    return r.json()
+    req = request.Request(f'https://www.tele.soumu.go.jp/musen/list?{params}')
+
+    with request.urlopen(req) as res:
+        return json.loads(res.read())
 
 def fetch_cities(s):
 
@@ -294,4 +296,3 @@ data_femto_df = city_merge(data_femto_1)
 
 # 保存
 data_femto_df.to_csv(f'csv/femto.csv', index=False, encoding="utf_8_sig")
-
