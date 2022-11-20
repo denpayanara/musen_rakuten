@@ -47,7 +47,7 @@ Rakuten_Repeater = {
 
 def musen_api(d):
 
-    params = parse.urlencode(Rakuten_4G, encoding="shift-jis")
+    params = parse.urlencode(d, encoding="shift-jis")
 
     req = request.Request(f'https://www.tele.soumu.go.jp/musen/list?{params}')
 
