@@ -1,6 +1,7 @@
 import datetime
 import json
 import re
+import ssl
 from urllib import request, parse
 
 import pandas as pd
@@ -50,7 +51,11 @@ def musen_api(d):
 
     req = request.Request(f'https://www.tele.soumu.go.jp/musen/list?{params}')
 
-    with request.urlopen(req) as res:
+    ctx = ssl.create_default_context()
+
+    ctx.options |= 0x4
+
+    with request.urlopen(req, context=ctx) as res:
         return json.loads(res.read())
 
 def fetch_cities(s):
