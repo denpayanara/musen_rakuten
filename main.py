@@ -205,7 +205,7 @@ today = now.date()
 str_month = today.strftime("%y/%m")
 
 # 月日
-str_today = today.strftime("%m/%d")
+str_today = today.strftime("%Y/%m/%d")
 
 # Rakuten_4G
 
