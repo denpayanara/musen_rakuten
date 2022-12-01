@@ -82,18 +82,18 @@ def send_message(key, url):
         )
 
     # '4G(包括免許)'の更新が無い場合
-    elif key == '4G(包括免許)':
+    # elif key == '4G(包括免許)':
         
-        message = f"本日の{key}の更新はありません。\n\n#楽天モバイル #近畿 #bot"
-        print(message)
+    #     message = f"本日の{key}の更新はありません。\n\n#楽天モバイル #近畿 #bot"
+    #     print(message)
 
-        # ツイート送信
-        api.update_status(status = message)
+    #     # ツイート送信
+    #     api.update_status(status = message)
 
-        time.sleep(1)
+    #     time.sleep(1)
 
-        # LINE送信
-        line_bot_api.broadcast(messages = TextSendMessage(text = message))
+    #     # LINE送信
+    #     line_bot_api.broadcast(messages = TextSendMessage(text = message))
 
 for key, url in musen.items():
 
