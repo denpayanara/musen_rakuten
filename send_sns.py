@@ -11,18 +11,20 @@ import requests
 
 csv_4G = 'tweet_data/Rakuten_4G.csv'
 img_4G = 'tweet_data/diff_Rakuten_4G.png'
+img_4G_url = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/tweet_data/diff_Rakuten_4G.png'
 
 csv_rep = 'tweet_data/Rakuten_Repeater.csv'
 img_rep = 'tweet_data/diff_Rakuten_Repeater.png'
+img_rep = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/tweet_data/diff_Rakuten_Repeater.png'
 
 musen = {
-    '4G(包括免許)': [csv_4G, img_4G],
-    '陸上移動中継局(包括免許)': [csv_rep, img_rep]
+    '4G(包括免許)': [csv_4G, img_4G, img_4G_url],
+    '陸上移動中継局(包括免許)': [csv_rep, img_rep, img_4G_url]
     }
 
-def send_message(key, file_path):
+def send_message(key, v):
 
-    df = pd.read_csv(file_path[0])
+    df = pd.read_csv(v[0])
 
     # 差分ありのみ抽出
     df_diff = df[df["増減数"] != 0]
@@ -53,13 +55,13 @@ def send_message(key, file_path):
 
         text = "\n".join(pref)
 
-        message = f"{key}更新\n\n{text}\n\n奈良県の詳細\nhttps://script.google.com/macros/s/AKfycbx6OjIvfSwa9CJJ_arw5H08HwewIk7NXUGEDOX81f8Vi79piLqskVXpCO-o9Kw4ZrBQ3w/exec\n\n#楽天モバイル #近畿 #bot"
+        message = f"【テスト中】{key}更新\n\n{text}\n\n奈良県の詳細\nhttps://script.google.com/macros/s/AKfycbx6OjIvfSwa9CJJ_arw5H08HwewIk7NXUGEDOX81f8Vi79piLqskVXpCO-o9Kw4ZrBQ3w/exec\n\n#楽天モバイル #近畿 #bot"
 
         print(message)
 
         # 画像読込
 
-        img_url = file_path[1]
+        img_url = file_path[2]
         img = requests.get(img_url).content
         img_data = BytesIO(img)
 
@@ -76,8 +78,8 @@ def send_message(key, file_path):
             messages = [
                 TextSendMessage(text = message),
                 ImageSendMessage(
-                    original_content_url = file_path[1],
-                    preview_image_url = file_path[1]
+                    original_content_url = file_path[2],
+                    preview_image_url = file_path[2]
                 )
             ]
         )
@@ -96,12 +98,12 @@ def send_message(key, file_path):
     #     # LINE送信
     #     line_bot_api.broadcast(messages = TextSendMessage(text = message))
 
-for key, file_path in musen.items():
+for key, v in musen.items():
 
     # ツイートイメージの作成日時を取得して本日の場合にsend_message関数を実行
 
-    t = os.path.getctime(file_path[1])
+    t = os.path.getctime(v[1])
     d = datetime.date.fromtimestamp(t)
 
     if d == datetime.date.today():
-        send_message(key, file_path)
+        send_message(key, v)
