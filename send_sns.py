@@ -1,3 +1,4 @@
+import datetime
 import os
 from io import BytesIO
 import time
@@ -8,20 +9,20 @@ import pandas as pd
 import tweepy
 import requests
 
-url_4G = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/Rakuten_4G.csv'
-img_4G = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_4G.png'
+csv_4G = 'tweet_data/Rakuten_4G.csv'
+img_4G = 'tweet_data/diff_Rakuten_4G.png'
 
-url_rep = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/Rakuten_Repeater.csv'
-img_rep = 'https://raw.githubusercontent.com/denpayanara/musen_test/main/tweet_data/diff_Rakuten_Repeater.png'
+csv_rep = 'tweet_data/Rakuten_Repeater.csv'
+img_rep = 'tweet_data/diff_Rakuten_Repeater.png'
 
 musen = {
-    '4G(包括免許)': [url_4G, img_4G],
-    '陸上移動中継局(包括免許)': [url_rep, img_rep]
+    '4G(包括免許)': [csv_4G, img_4G],
+    '陸上移動中継局(包括免許)': [csv_rep, img_rep]
     }
 
-def send_message(key, url):
+def send_message(key, file_path):
 
-    df = pd.read_csv(url[0])
+    df = pd.read_csv(file_path[0])
 
     # 差分ありのみ抽出
     df_diff = df[df["増減数"] != 0]
@@ -58,7 +59,7 @@ def send_message(key, url):
 
         # 画像読込
 
-        img_url = url[1]
+        img_url = file_path[1]
         img = requests.get(img_url).content
         img_data = BytesIO(img)
 
@@ -75,8 +76,8 @@ def send_message(key, url):
             messages = [
                 TextSendMessage(text = message),
                 ImageSendMessage(
-                    original_content_url = url[1],
-                    preview_image_url = url[1]
+                    original_content_url = file_path[1],
+                    preview_image_url = file_path[1]
                 )
             ]
         )
@@ -95,6 +96,13 @@ def send_message(key, url):
     #     # LINE送信
     #     line_bot_api.broadcast(messages = TextSendMessage(text = message))
 
-for key, url in musen.items():
+for key, file_path in musen.items():
 
-    send_message(key, url)
+    # ツイートイメージの作成日時が本日の場合にsend_message関数を実行
+
+    t = os.stat(file_path[1]).st_birthtime
+    d = datetime.date.fromtimestamp(t)
+
+    if d == datetime.date.today():
+        print('【テスト】更新あり')
+        # send_message(key, file_path)
