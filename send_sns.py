@@ -98,13 +98,10 @@ def send_message(key, file_path):
 
 for key, file_path in musen.items():
 
-    # ツイートイメージの作成日時が本日の場合にsend_message関数を実行
-
-    # t = os.stat(file_path[1]).st_birthtime
+    # ツイートイメージの作成日時を取得して本日の場合にsend_message関数を実行
 
     t = os.path.getctime(file_path[1])
     d = datetime.date.fromtimestamp(t)
 
     if d == datetime.date.today():
-        print('【テスト】更新あり')
-        # send_message(key, file_path)
+        send_message(key, file_path)
