@@ -105,5 +105,9 @@ for key, v in musen.items():
     t = os.path.getctime(v[1])
     d = datetime.date.fromtimestamp(t)
 
-    if d == datetime.date.today():
+    # 今日の年月日を取得 
+    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    today = now.date()
+
+    if d == today:
         send_message(key, v)
