@@ -100,7 +100,9 @@ for key, file_path in musen.items():
 
     # ツイートイメージの作成日時が本日の場合にsend_message関数を実行
 
-    t = os.stat(file_path[1]).st_birthtime
+    # t = os.stat(file_path[1]).st_birthtime
+
+    t = os.path.getctime(file_path[1])
     d = datetime.date.fromtimestamp(t)
 
     if d == datetime.date.today():
