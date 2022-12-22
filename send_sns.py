@@ -61,7 +61,7 @@ def send_message(key, v):
 
         # 画像読込
 
-        img_url = file_path[2]
+        img_url = v[2]
         img = requests.get(img_url).content
         img_data = BytesIO(img)
 
@@ -78,8 +78,8 @@ def send_message(key, v):
             messages = [
                 TextSendMessage(text = message),
                 ImageSendMessage(
-                    original_content_url = file_path[2],
-                    preview_image_url = file_path[2]
+                    original_content_url = v[2],
+                    preview_image_url = v[2]
                 )
             ]
         )
