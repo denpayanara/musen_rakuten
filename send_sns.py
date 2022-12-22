@@ -15,7 +15,7 @@ img_4G_url = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/t
 
 csv_rep = 'tweet_data/Rakuten_Repeater.csv'
 img_rep = 'tweet_data/diff_Rakuten_Repeater.png'
-img_rep = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/tweet_data/diff_Rakuten_Repeater.png'
+img_rep_url = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/tweet_data/diff_Rakuten_Repeater.png'
 
 musen = {
     '4G(包括免許)': [csv_4G, img_4G, img_4G_url],
@@ -55,7 +55,7 @@ def send_message(key, v):
 
         text = "\n".join(pref)
 
-        message = f"【テスト中】{key}更新\n\n{text}\n\n奈良県の詳細\nhttps://script.google.com/macros/s/AKfycbx6OjIvfSwa9CJJ_arw5H08HwewIk7NXUGEDOX81f8Vi79piLqskVXpCO-o9Kw4ZrBQ3w/exec\n\n#楽天モバイル #近畿 #bot"
+        message = f"【テスト中、ﾀﾋﾞﾀﾋﾞｺﾞﾒﾝﾅｻｲ】{key}更新\n\n{text}\n\n奈良県の詳細\nhttps://script.google.com/macros/s/AKfycbx6OjIvfSwa9CJJ_arw5H08HwewIk7NXUGEDOX81f8Vi79piLqskVXpCO-o9Kw4ZrBQ3w/exec\n\n#楽天モバイル #近畿 #bot"
 
         print(message)
 
