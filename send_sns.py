@@ -106,7 +106,8 @@ for key, v in musen.items():
     d = datetime.date.fromtimestamp(t)
 
     # 今日の年月日を取得 
-    now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    # now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
+    now = datetime.datetime.utcnow()
     today = now.date()
 
     if d == today:
