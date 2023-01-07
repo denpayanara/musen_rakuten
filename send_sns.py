@@ -109,6 +109,9 @@ for key, v in musen.items():
     # now = datetime.datetime.utcnow() + datetime.timedelta(hours=9)
     now = datetime.datetime.utcnow()
     today = now.date()
+    
+    print(f'プログラムが実行した年月日は{today}です。')
+    print(f'{key}のファイルの作成年月日は{d}です。')
 
     if d == today:
         send_message(key, v)
