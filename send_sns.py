@@ -22,6 +22,8 @@ musen = {
     '陸上移動中継局(包括免許)': [csv_rep, img_rep, img_4G_url]
     }
 
+# Twitterは停止
+
 def send_message(key, v):
 
     df = pd.read_csv(v[0])
@@ -30,13 +32,13 @@ def send_message(key, v):
     df_diff = df[df["増減数"] != 0]
 
     # Twitter
-    api_key = os.environ["API_KEY"]
-    api_secret = os.environ["API_SECRET_KEY"]
-    access_token = os.environ["ACCESS_TOKEN"]
-    access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
-    auth = tweepy.OAuthHandler(api_key, api_secret)
-    auth.set_access_token(access_token, access_token_secret)
-    api = tweepy.API(auth)
+    # api_key = os.environ["API_KEY"]
+    # api_secret = os.environ["API_SECRET_KEY"]
+    # access_token = os.environ["ACCESS_TOKEN"]
+    # access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
+    # auth = tweepy.OAuthHandler(api_key, api_secret)
+    # auth.set_access_token(access_token, access_token_secret)
+    # api = tweepy.API(auth)
 
     # LINE
     line_bot_api = LineBotApi(os.environ["LINE_CHANNEL_ACCESS_TOKEN"])
@@ -66,10 +68,10 @@ def send_message(key, v):
         img_data = BytesIO(img)
 
         # ツイート送信
-        media_ids = []
-        res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
-        media_ids.append(res_media_ids.media_id)
-        api.update_status(status = message, media_ids = media_ids)
+        # media_ids = []
+        # res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
+        # media_ids.append(res_media_ids.media_id)
+        # api.update_status(status = message, media_ids = media_ids)
         
         time.sleep(1)
 
