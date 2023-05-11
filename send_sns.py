@@ -19,7 +19,7 @@ img_rep_url = 'https://raw.githubusercontent.com/denpayanara/musen_rakuten/main/
 
 musen = {
     '4G(包括免許)': [csv_4G, img_4G, img_4G_url],
-    '陸上移動中継局(包括免許)': [csv_rep, img_rep, img_4G_url]
+    '陸上移動中継局(包括免許)': [csv_rep, img_rep, img_rep_url]
     }
 
 # Twitterは停止
