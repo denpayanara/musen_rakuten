@@ -79,15 +79,15 @@ def send_message(key, v):
         time.sleep(1)
 
         # LINE送信
-        # line_bot_api.broadcast(
-        #     messages = [
-        #         TextSendMessage(text = message),
-        #         ImageSendMessage(
-        #             original_content_url = v[2],
-        #             preview_image_url = v[2]
-        #         )
-        #     ]
-        # )
+        line_bot_api.broadcast(
+            messages = [
+                TextSendMessage(text = message),
+                ImageSendMessage(
+                    original_content_url = v[2],
+                    preview_image_url = v[2]
+                )
+            ]
+        )
 
     # '4G(包括免許)'の更新が無い場合
     # elif key == '4G(包括免許)':
