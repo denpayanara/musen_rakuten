@@ -32,13 +32,16 @@ def send_message(key, v):
     df_diff = df[df["増減数"] != 0]
 
     # Twitter
-    # api_key = os.environ["API_KEY"]
-    # api_secret = os.environ["API_SECRET_KEY"]
-    # access_token = os.environ["ACCESS_TOKEN"]
-    # access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
-    # auth = tweepy.OAuthHandler(api_key, api_secret)
-    # auth.set_access_token(access_token, access_token_secret)
-    # api = tweepy.API(auth)
+    api_key = os.environ["API_KEY"]
+    api_secret = os.environ["API_SECRET_KEY"]
+    access_token = os.environ["ACCESS_TOKEN"]
+    access_token_secret = os.environ["ACCESS_TOKEN_SECRET"]
+
+    auth = tweepy.OAuthHandler(api_key, api_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    api = tweepy.API(auth)
+    client = tweepy.Client(consumer_key = api_key, consumer_secret = api_secret, access_token = access_token, access_token_secret = access_token_secret,)
 
     # LINE
     line_bot_api = LineBotApi(os.environ["LINE_CHANNEL_ACCESS_TOKEN"])
@@ -68,23 +71,23 @@ def send_message(key, v):
         img_data = BytesIO(img)
 
         # ツイート送信
-        # media_ids = []
-        # res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
-        # media_ids.append(res_media_ids.media_id)
-        # api.update_status(status = message, media_ids = media_ids)
+        media_ids = []
+        res_media_ids = api.media_upload(filename = 'img.png', file = img_data)
+        media_ids.append(res_media_ids.media_id)
+        client.create_tweet(text = message, media_ids=media_ids)
         
         time.sleep(1)
 
         # LINE送信
-        line_bot_api.broadcast(
-            messages = [
-                TextSendMessage(text = message),
-                ImageSendMessage(
-                    original_content_url = v[2],
-                    preview_image_url = v[2]
-                )
-            ]
-        )
+        # line_bot_api.broadcast(
+        #     messages = [
+        #         TextSendMessage(text = message),
+        #         ImageSendMessage(
+        #             original_content_url = v[2],
+        #             preview_image_url = v[2]
+        #         )
+        #     ]
+        # )
 
     # '4G(包括免許)'の更新が無い場合
     # elif key == '4G(包括免許)':
