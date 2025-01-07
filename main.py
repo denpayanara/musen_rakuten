@@ -66,7 +66,9 @@ def musen_api(d):
 
 def fetch_cities(s):
 
-    lst = re.findall("(\S+)\(([0-9,]+)\)", s)
+    # lst = re.findall("(\S+)\(([0-9,]+)\)", s)
+
+    lst = re.findall("(\S+?)\s*\(([0-9,]+)\)", s)
 
     df0 = pd.DataFrame(lst, columns=["市区町村名", "開設局数"])
     df0["開設局数"] = df0["開設局数"].str.strip().str.replace(",", "").astype(int)
