@@ -184,6 +184,8 @@ def output(df, musen):
 
     # 差分がある時、ツイート用の画像を作成し保存
     if len(df_kinki_diff) > 0:
+
+        print(f"プロット対象データ数: {len(df_kinki_diff)}")
         
         # plotlyで近畿圏のデータをプロット
         fig = ff.create_table(df_kinki_diff)
@@ -203,6 +205,8 @@ def output(df, musen):
         fig.layout.title.font.size = 10
 
         fig.write_image(f'tweet_data/diff_{musen}.png', engine='kaleido', scale=1)
+    else:
+        print("プロット対象データがありません")
     
 
 # 今日の年月日を取得 
