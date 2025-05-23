@@ -75,7 +75,8 @@ def fetch_cities(s):
 
     flag = df0["市区町村名"].str.endswith(("都", "道", "府", "県"))
 
-    df0["都道府県名"] = df0["市区町村名"].where(flag).fillna(method="ffill")
+    # df0["都道府県名"] = df0["市区町村名"].where(flag).fillna(method="ffill")
+    df0["都道府県名"] = df0["市区町村名"].where(flag).ffill()
 
     return df0
 
