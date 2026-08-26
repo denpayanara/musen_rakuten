@@ -205,7 +205,8 @@ def output(df, musen):
         # タイトルフォントサイズ
         fig.layout.title.font.size = 10
 
-        fig.write_image(f'tweet_data/diff_{musen}.png', engine='kaleido', scale=1)
+        # fig.write_image(f'tweet_data/diff_{musen}.png', engine='kaleido', scale=1)
+        fig.write_image(f'tweet_data/diff_{musen}.png',scale=1)
     else:
         print("プロット対象データがありません")
     
